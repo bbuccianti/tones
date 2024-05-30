@@ -1,7 +1,11 @@
-{:deps true
+{:deps     true
  :dev-http {8080 "public"}
- :builds {:app
-          {:target :browser
-           :modules {:main {:entries [app.core]
-                            :init-fn app.core/init}}
-           :devtools {:preloads [preload devtools.preload]}}}}
+ :builds   {:test
+            {:target    :node-test
+             :autorun   true
+             :output-to "out/node-tests.js"}
+            :app
+            {:target   :browser
+             :modules  {:main {:entries [app.core]
+                               :init-fn app.core/init}}
+             :devtools {:preloads [preload devtools.preload]}}}}
