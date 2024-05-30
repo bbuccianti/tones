@@ -1,0 +1,28 @@
+.header {
+    text-align: center;
+}
+
+.centered {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.centered > button {
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 20px;
+    border-radius: 30%;
+}
+
+.py-100 {
+    padding: 100px 0;
+}
+
+.mx-5 {
+    margin: 0 10px;
+}
+
+.hl {
+    border: solid 1px pink;
+}
