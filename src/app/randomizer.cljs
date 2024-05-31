@@ -24,4 +24,10 @@
        ($ :.col-2
           ($ :.tag.is-large.is-center.py-5 b)))))
 
+(defui reset []
+  ($ :.container.my-5.is-center
+     ($ :.row
+        ($ :.col
+           ($ :button.button.dark {:onClick (uix/use-context randomizer-ctx)}
+              "Reset")))))
 

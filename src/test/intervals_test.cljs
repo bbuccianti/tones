@@ -4,6 +4,7 @@
 
 (deftest distance-in-semitones
   (are [a b result] (= result (distance a b))
+    :C :C  0
     :B :C  1
     :A :B  2
     :A :C  3

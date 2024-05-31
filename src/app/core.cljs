@@ -10,7 +10,8 @@
      ($ :h1.is-center "Intervals trainer")
      ($ ar/RandomTonesProvider
         ($ ar/randomizer)
-        ($ as/buttons))))
+        ($ as/buttons)
+        ($ ar/reset))))
 
 (defonce root
   (uix.dom/create-root (js/document.getElementById "root")))
