@@ -5,24 +5,22 @@
    [uix.dom]))
 
 (defui header []
-  ($ :.header
-     ($ :h1 "Intervals trainer")))
-
-(defui button [{:keys [item]}]
-  ($ :button {} item))
+  ($ :h1.is-center "Intervals trainer"))
 
 (defui randomizer []
-  ($ :.centered.py-100
-     ($ :div.mx-5 (ai/random-tone))
-     ($ :div.mx-5 (ai/random-tone))))
+  ($ :.row.is-center.py-5
+     ($ :.col-2
+        ($ :.tag.is-large.is-center.py-5 (ai/random-tone)))
+     ($ :.col-2
+        ($ :.tag.is-large.is-center.py-5 (ai/random-tone)))))
 
 (defui selector [{:keys [items]}]
-  ($ :.centered
+  ($ :.container.is-center
      (for [item items]
-       ($ button {:key item :item item}))))
+       ($ :button.button {:key item} item))))
 
 (defui app []
-  ($ :.app
+  ($ :.container
      ($ header)
      ($ randomizer)
      ($ selector {:items ai/semitones})))
