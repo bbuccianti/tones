@@ -3,14 +3,23 @@
             [app.randomizer :as ar]
             [uix.core :as uix :refer [defui $]]))
 
-(defui button [{:keys [randomize! item]}]
-  ($ :button.button
-     {:onClick randomize!}
-     item))
+(defui button [{:keys [item default-color]}]
+  (let [{:keys [a b]} (uix/use-context ar/tones-ctx)
+        [color set-color!] (uix/use-state default-color)]
+    ($ :button.button
+       {:class color
+        :onClick
+        (fn []
+          (if (= (apply ai/distance (map keyword [a b]))
+                 item)
+            (set-color! "primary")
+            (set-color! "error")))}
+       item)))
 
 (defui buttons []
-  (let [randomize! (uix/use-context ar/randomizer-ctx)]
-    ($ :.container.is-center
-       (for [item ai/semitones]
-         ($ button {:key item :randomize! randomize! :item item})))))
+  ($ :.container.is-center
+     (for [item ai/semitones]
+       ($ button {:key item
+                  :item item
+                  :default-color "secondary"}))))
 
