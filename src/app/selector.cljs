@@ -1,20 +1,21 @@
 (ns app.selector
   (:require [app.intervals :as ai]
-            [app.randomizer :as ar]
+            [app.tones :refer [use-tones]]
+            [app.state :refer [use-dispatch]]
             [uix.core :as uix :refer [defui $]]))
 
 (defui button [{:keys [item]}]
-  (let [{:keys [a b]} (uix/use-context ar/tones-ctx)
+  (let [{:keys [a b]} (use-tones)
+        dispatch (use-dispatch)
         [color set-color!] (uix/use-state nil)]
     (uix/use-effect (fn [] (set-color! nil)) [a b])
     ($ :button.button
        {:class color
         :onClick
         (fn []
-          (if (= (apply ai/distance (map keyword [a b]))
-                 item)
-            (set-color! "success")
-            (set-color! "error")))}
+          (let [kw (ai/result a b item)]
+            (dispatch {:type kw})
+            (set-color! kw)))}
        item)))
 
 (defui buttons []

@@ -21,3 +21,8 @@
 
 (defn random-tone []
   (->> (rand-int (count semitones)) number->tone name))
+
+(defn result [a b c]
+  (if (= (apply distance (map keyword [a b])) c)
+    :success
+    :error))
