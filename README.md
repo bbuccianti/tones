@@ -1,12 +1,6 @@
-# intervals
+# music intervals trainer
 
-## Quick setup
-```shell
-npx create-uix-app@latest my-app # bare-bones project
-npx create-uix-app@latest my-app --re-frame # adds re-frame setup
-npx create-uix-app@latest MyApp --react-native # setup cljs project in existing React Native project
-npx create-uix-app@latest MyApp --expo # create a new React Native project using Expo
-```
+@TODO
 
 ## Development
 ```shell
