@@ -2,6 +2,17 @@
     border: solid 1px pink;
 }
 
+#buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+#buttons > button {
+  flex: 1 1 20%;
+}
+
 /* Padding classes */
 .p-0 { padding: 0 !important; }
 .p-1 { padding: 0.25rem !important; }

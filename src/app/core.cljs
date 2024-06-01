@@ -2,7 +2,6 @@
   (:require
    [app.score :as ah]
    [app.selector :as as]
-   [app.reset :as ar]
    [app.state :as state]
    [app.tones :as at]
    [uix.core :as uix :refer [defui $]]
@@ -14,8 +13,7 @@
      ($ state/Provider
         ($ ah/score)
         ($ at/tones)
-        ($ as/buttons)
-        ($ ar/Next))))
+        ($ as/buttons))))
 
 (defonce root
   (uix.dom/create-root (js/document.getElementById "root")))

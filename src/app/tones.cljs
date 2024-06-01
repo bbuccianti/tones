@@ -9,7 +9,7 @@
 (defui tones []
   (let [{:keys [a b]} (use-tones)]
     ($ :.row.is-center.py-5
-       ($ :.col-2
+       ($ :.col-1.mx-5
           ($ :.tag.is-large.is-center.py-5 a))
-       ($ :.col-2
+       ($ :.col-1.mx-5
           ($ :.tag.is-large.is-center.py-5 b)))))

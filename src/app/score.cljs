@@ -4,10 +4,10 @@
 
 (defn use-score []
   (let [state (uix/use-context state/state-ctx)]
-    (:score state)))
+    (select-keys state [:success :error])))
 
 (defui score []
-  (let [{:keys [ok total]} (use-score)]
+  (let [{:keys [success error]} (use-score)]
     ($ :.row
        ($ :.col.is-right
-          (str ok " / " total)))))
+          (str success " / " (+ success error))))))

@@ -9,7 +9,7 @@
         dispatch (use-dispatch)
         [color set-color!] (uix/use-state nil)]
     (uix/use-effect (fn [] (set-color! nil)) [a b])
-    ($ :button.button
+    ($ :button.button.mx-4.my-2.py-4
        {:class color
         :onClick
         (fn []
@@ -19,7 +19,7 @@
        item)))
 
 (defui buttons []
-  ($ :.container.is-center
+  ($ :#buttons.py-5.container
      (for [item ai/semitones]
        ($ button {:key item
                   :item item}))))
