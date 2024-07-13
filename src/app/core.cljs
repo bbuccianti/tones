@@ -1,19 +1,26 @@
 (ns app.core
   (:require
-   [app.score :as ah]
-   [app.selector :as as]
-   [app.state :as state]
-   [app.tones :as at]
+   [app.config :as app.config]
+   [app.score :as app.score]
+   [app.selector :as app.selector]
+   [app.state :as app.state]
+   [app.tones :as app.tones]
    [uix.core :as uix :refer [defui $]]
    [uix.dom]))
 
 (defui app []
   ($ :.container
-     ($ :h1.is-center "Intervals trainer")
-     ($ state/Provider
-        ($ ah/score)
-        ($ at/tones)
-        ($ as/buttons))))
+     ($ :h1.is-center "Tones")
+     ($ app.state/Provider
+        ($ app.selector/modes)
+
+        ($ app.score/score)
+
+        ($ app.tones/tones-or-chord)
+
+        ($ app.selector/buttons)
+
+        ($ app.config/randomizer))))
 
 (defonce root
   (uix.dom/create-root (js/document.getElementById "root")))
