@@ -3,24 +3,26 @@
    [app.config :as app.config]
    [app.score :as app.score]
    [app.selector :as app.selector]
-   [app.state :as app.state]
    [app.tones :as app.tones]
+   [re-frame.core :as rf]
    [uix.core :as uix :refer [defui $]]
-   [uix.dom]))
+   [uix.dom]
+   [app.subs]
+   [app.events]))
 
 (defui app []
   ($ :.container
      ($ :h1.is-center "Tones")
-     ($ app.state/Provider
-        ($ app.selector/modes)
 
-        ($ app.score/score)
+     ($ app.selector/modes)
 
-        ($ app.tones/tones-or-chord)
+     ($ app.score/score)
 
-        ($ app.selector/buttons)
+     ($ app.tones/tones-or-chord)
 
-        ($ app.config/randomizer))))
+     ($ app.selector/buttons)
+
+     ($ app.config/randomizer)))
 
 (defonce root
   (uix.dom/create-root (js/document.getElementById "root")))
@@ -29,4 +31,5 @@
   (uix.dom/render-root ($ app) root))
 
 (defn ^:export init []
+  (rf/dispatch-sync [:initialise-db])
   (render))

@@ -1,16 +1,15 @@
 (ns app.selector
   (:require [app.intervals :as app.intervals]
-            [app.state :as app.state]
+            [app.store :as app.store]
+            [re-frame.core :as rf]
             [uix.core :as uix :refer [defui $]]))
 
 (defui mode-button [{:keys [id text]}]
-  (let [{:keys [mode]} (app.state/use-state)
-        dispatch (app.state/use-dispatch)]
+  (let [mode (app.store/use-subscribe [:mode])]
     ($ :button.button
        {:class (if (= mode id) :primary :dark)
         :onClick
-        (fn []
-          (dispatch [{:id :switch-mode :payload id}]))}
+        (fn [] (rf/dispatch [:set-mode id]))}
        text)))
 
 (defui modes []
@@ -19,8 +18,7 @@
      ($ mode-button {:id :chords :text "Chords"})))
 
 (defui button [{:keys [item check-fn]}]
-  (let [{:keys [tones]} (app.state/use-state)
-        dispatch (app.state/use-dispatch)
+  (let [tones (app.store/use-subscribe [:tones])
         [color set-color!] (uix/use-state nil)]
     (uix/use-effect (fn [] (set-color! nil)) [tones])
     ($ :button.button.mx-4.my-2.py-4
@@ -29,24 +27,22 @@
         (fn []
           (let [kw (check-fn tones item)]
             (when (not (= color kw))
-              (dispatch [{:id kw}]))
+              (rf/dispatch [kw]))
             (set-color! kw)))}
        item)))
 
 (defn mode->functions [mode]
-  {:items    (if (= mode :intervals)
-               app.intervals/semitones
-               app.intervals/tones)
-   :check-fn (if (= mode :intervals)
-               app.intervals/check-distance
-               app.intervals/check-if-chord)})
+  (if (= mode :intervals)
+    [app.intervals/semitones app.intervals/check-distance]
+    [app.intervals/tones app.intervals/check-if-chord]))
 
 (defui buttons []
-  (let [{:keys [mode randomize?]} (app.state/use-state)
-        {:keys [items check-fn]} (mode->functions mode)]
+  (let [mode             (app.store/use-subscribe [:mode])
+        randomize?       (app.store/use-subscribe [:randomize?])
+        [items check-fn] (mode->functions mode)]
     ($ :#buttons.py-5.container
        (for [item (if randomize? (shuffle items) items)]
-         ($ button {:key item
+         ($ button {:key      item
                     :check-fn check-fn
-                    :item item})))))
+                    :item     item})))))
 

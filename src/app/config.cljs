@@ -1,16 +1,16 @@
 (ns app.config
-  (:require [app.state :as app.state]
+  (:require [app.store :as app.store]
+            [re-frame.core :as rf]
             [uix.core :as uix :refer [defui $]]))
 
 (defui randomizer []
-  (let [{:keys [randomize?]} (app.state/use-state)
-        dispatch (app.state/use-dispatch)
+  (let [randomize? (app.store/use-subscribe [:randomize?])
         class (if randomize? :primary :default)]
     ($ :.container.is-center
        ($ :button.button
           {:class class
-           :onClick (fn [] (dispatch [{:id :randomize?}]))}
+           :onClick (fn [] (rf/dispatch [:toggle-randomize]))}
           "Randomize?")
        ($ :button.button.outline
-          {:onClick (fn [] (dispatch [{:id :next}]))}
+          {:onClick (fn [] (rf/dispatch [:next]))}
           "Next"))))
