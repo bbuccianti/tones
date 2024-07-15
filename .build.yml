@@ -1,0 +1,18 @@
+image: alpine/edge
+packages:
+  - npm
+secrets:
+  - b820ee43-9b14-40bb-9b43-862b580e8230
+  - b3254028-983f-47f4-868e-5f1e35d5a4a2
+sources:
+  - https://git.sr.ht/~bbuccianti/tones
+tasks:
+  - setup: |
+    cd tones
+    npm install
+  - build: |
+    cd tones
+    npm run release
+  - deploy: |
+    cd tones
+    CLOUDFLARE_ACCOUNT_ID=${cloudflare-account-id} CLOUDFLARE_API_TOKEN=${cloudflare-deploy} npx wrangler pages delpoy public/ --project-name=tones
