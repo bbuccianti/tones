@@ -1,5 +1,6 @@
 image: alpine/edge
 packages:
+  - lua5.3
   - nodejs
   - npm
   - yarn
@@ -29,4 +30,4 @@ tasks:
       npx wrangler pages deploy public/ --project-name=tones
       export RESULT=$(test $? -eq 0 && echo "GOOD" || echo "BAD")
       echo "Sending IRC message with: Build $RESULT"
-      lua irc.lua
+      lua5.3 irc.lua
