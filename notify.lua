@@ -1,7 +1,7 @@
 local server_port = "irc.libera.chat 6667"
 local channel = "#buccianti"
+local nick = "tones"
 local url = os.getenv("JOB_URL") or "???"
-local result = os.getenv("RESULT")
 
 local origin_job_prefix = 'https://builds.sr.ht/bbuccianti/job/'
 local is_origin = url:sub(1, #origin_job_prefix) == origin_job_prefix
@@ -15,10 +15,10 @@ local log = git_log:read("*a"):gsub("\n", " "):gsub("\n", " ")
 
 local nc = io.popen(string.format("nc -v %s > /dev/null", server_port), "w")
 
-nc:write("NICK tones\n")
-nc:write("USER tones 8 x : tones\n")
+nc:write(string.format("NICK %s\n", nick))
+nc:write(string.format("USER %s 8 x : %s\n", nick, nick))
 nc:write("JOIN " .. channel .. "\n")
-nc:write(string.format("PRIVMSG %s :Build %s! %s / %s\n",
-                       channel, result, log, url))
+nc:write(string.format("PRIVMSG %s :Build %s! @fold - %s / %s\n",
+                       channel, arg[1], log, url))
 nc:write("QUIT\n")
 nc:close()
