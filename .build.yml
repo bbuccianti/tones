@@ -28,6 +28,6 @@ tasks:
   - deploy: |
       cd tones
       npx wrangler pages deploy public/ --project-name=tones
-      export RESULT=$(test $? -eq 0 && echo "GOOD" || echo "BAD")
+      export RESULT=$(test $? -eq 0 && echo "SUCCEEDED" || echo "FAILED")
       echo "Sending IRC message with: Build $RESULT"
       lua5.3 irc.lua
