@@ -13,12 +13,12 @@ local is_main = branch == 'main'
 local git_log = io.popen("git log --oneline -n 1 HEAD")
 local log = git_log:read("*a"):gsub("\n", " "):gsub("\n", " ")
 
-local nc = io.popen(string.format("nc %s > /dev/null", server_port), "w")
+local nc = io.popen(string.format("nc -v %s > /dev/null", server_port), "w")
 
 nc:write("NICK tones\n")
 nc:write("USER tones 8 x : tones\n")
 nc:write("JOIN " .. channel .. "\n")
-nc:write(string.format("PRIVMSG :%s Build %s! %s / %s\n",
+nc:write(string.format("PRIVMSG %s :Build %s! %s / %s\n",
                        channel, result, log, url))
 nc:write("QUIT\n")
 nc:close()
