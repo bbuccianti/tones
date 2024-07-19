@@ -22,11 +22,11 @@ tasks:
       sudo ./linux-install.sh
   - setup: |
       cd tones
-      yarn install || lua5.3 notify.lua "FAILED"
+      yarn install || lua5.3 notify.lua
   - build: |
       cd tones
-      yarn release || lua5.3 notify.lua "FAILED"
+      yarn release || lua5.3 notify.lua
   - deploy: |
       cd tones
       npx wrangler pages deploy public/ --project-name=tones
-      RESULT=$(test $? -eq 0 && echo "SUCCEEDED" || echo "FAILED") lua5.3 notify.lua "$RESULT"
+      lua5.3 notify.lua "$?"
